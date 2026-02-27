@@ -1,6 +1,6 @@
 // scraper.ts
 import { chromium } from "playwright";
-import fs from "fs";
+import { promises as fs } from "fs";
 import { writeToCSV } from "./utils.js";
 import type { ProductData } from "./utils.js";
 import { scrapeAmazon } from "./scrapers/amazonScraper.js";
@@ -19,7 +19,7 @@ async function main() {
     logger.info("Scraper started");
 
     //Read input file
-    const file = fs.readFileSync("skus.json", "utf-8");
+    const file = await fs.readFile("skus.json", "utf-8");
     const data: { skus: SKUItem[] } = JSON.parse(file);
 
     logger.info("Loaded SKUs", { count: data.skus.length });
